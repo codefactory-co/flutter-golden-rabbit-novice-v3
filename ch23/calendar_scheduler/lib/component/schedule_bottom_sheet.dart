@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:calendar_scheduler/component/custom_text_field.dart';
 import 'package:calendar_scheduler/const/colors.dart';
@@ -92,7 +91,7 @@ class _ScheduleBottomSheetState extends State<ScheduleBottomSheet> {
                     // ➌ [저장] 버튼
                     onPressed: () => onSavePressed(context),
                     style: ElevatedButton.styleFrom(
-                      primary: PRIMARY_COLOR,
+                      foregroundColor: PRIMARY_COLOR,
                     ),
                     child: Text('저장'),
                   ),

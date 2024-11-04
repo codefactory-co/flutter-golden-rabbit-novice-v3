@@ -1,6 +1,5 @@
 import 'package:calendar_scheduler/model/schedule_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:calendar_scheduler/component/main_calendar.dart';
 import 'package:calendar_scheduler/component/schedule_card.dart';
@@ -28,7 +27,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final future = Supabase.instance.client.from('schedule').select<List<Map<String, dynamic>>>().eq('date',
+    final future = Supabase.instance.client.from('schedule').select().eq('date',
         '${selectedDate.year}${selectedDate.month.toString().padLeft(2, '0')}${selectedDate.day.toString().padLeft(2, '0')}');
 
     return Scaffold(

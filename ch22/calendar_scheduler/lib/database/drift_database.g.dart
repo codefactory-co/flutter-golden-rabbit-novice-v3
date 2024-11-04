@@ -177,6 +177,16 @@ class Schedule extends DataClass implements Insertable<Schedule> {
         startTime: startTime ?? this.startTime,
         endTime: endTime ?? this.endTime,
       );
+  Schedule copyWithCompanion(SchedulesCompanion data) {
+    return Schedule(
+      id: data.id.present ? data.id.value : this.id,
+      content: data.content.present ? data.content.value : this.content,
+      date: data.date.present ? data.date.value : this.date,
+      startTime: data.startTime.present ? data.startTime.value : this.startTime,
+      endTime: data.endTime.present ? data.endTime.value : this.endTime,
+    );
+  }
+
   @override
   String toString() {
     return (StringBuffer('Schedule(')
@@ -292,10 +302,178 @@ class SchedulesCompanion extends UpdateCompanion<Schedule> {
 
 abstract class _$LocalDatabase extends GeneratedDatabase {
   _$LocalDatabase(QueryExecutor e) : super(e);
+  $LocalDatabaseManager get managers => $LocalDatabaseManager(this);
   late final $SchedulesTable schedules = $SchedulesTable(this);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
   @override
   List<DatabaseSchemaEntity> get allSchemaEntities => [schedules];
+}
+
+typedef $$SchedulesTableCreateCompanionBuilder = SchedulesCompanion Function({
+  Value<int> id,
+  required String content,
+  required DateTime date,
+  required int startTime,
+  required int endTime,
+});
+typedef $$SchedulesTableUpdateCompanionBuilder = SchedulesCompanion Function({
+  Value<int> id,
+  Value<String> content,
+  Value<DateTime> date,
+  Value<int> startTime,
+  Value<int> endTime,
+});
+
+class $$SchedulesTableFilterComposer
+    extends Composer<_$LocalDatabase, $SchedulesTable> {
+  $$SchedulesTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get id => $composableBuilder(
+      column: $table.id, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get content => $composableBuilder(
+      column: $table.content, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<DateTime> get date => $composableBuilder(
+      column: $table.date, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<int> get startTime => $composableBuilder(
+      column: $table.startTime, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<int> get endTime => $composableBuilder(
+      column: $table.endTime, builder: (column) => ColumnFilters(column));
+}
+
+class $$SchedulesTableOrderingComposer
+    extends Composer<_$LocalDatabase, $SchedulesTable> {
+  $$SchedulesTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get id => $composableBuilder(
+      column: $table.id, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get content => $composableBuilder(
+      column: $table.content, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<DateTime> get date => $composableBuilder(
+      column: $table.date, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<int> get startTime => $composableBuilder(
+      column: $table.startTime, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<int> get endTime => $composableBuilder(
+      column: $table.endTime, builder: (column) => ColumnOrderings(column));
+}
+
+class $$SchedulesTableAnnotationComposer
+    extends Composer<_$LocalDatabase, $SchedulesTable> {
+  $$SchedulesTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<int> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get content =>
+      $composableBuilder(column: $table.content, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get date =>
+      $composableBuilder(column: $table.date, builder: (column) => column);
+
+  GeneratedColumn<int> get startTime =>
+      $composableBuilder(column: $table.startTime, builder: (column) => column);
+
+  GeneratedColumn<int> get endTime =>
+      $composableBuilder(column: $table.endTime, builder: (column) => column);
+}
+
+class $$SchedulesTableTableManager extends RootTableManager<
+    _$LocalDatabase,
+    $SchedulesTable,
+    Schedule,
+    $$SchedulesTableFilterComposer,
+    $$SchedulesTableOrderingComposer,
+    $$SchedulesTableAnnotationComposer,
+    $$SchedulesTableCreateCompanionBuilder,
+    $$SchedulesTableUpdateCompanionBuilder,
+    (Schedule, BaseReferences<_$LocalDatabase, $SchedulesTable, Schedule>),
+    Schedule,
+    PrefetchHooks Function()> {
+  $$SchedulesTableTableManager(_$LocalDatabase db, $SchedulesTable table)
+      : super(TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$SchedulesTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$SchedulesTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$SchedulesTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback: ({
+            Value<int> id = const Value.absent(),
+            Value<String> content = const Value.absent(),
+            Value<DateTime> date = const Value.absent(),
+            Value<int> startTime = const Value.absent(),
+            Value<int> endTime = const Value.absent(),
+          }) =>
+              SchedulesCompanion(
+            id: id,
+            content: content,
+            date: date,
+            startTime: startTime,
+            endTime: endTime,
+          ),
+          createCompanionCallback: ({
+            Value<int> id = const Value.absent(),
+            required String content,
+            required DateTime date,
+            required int startTime,
+            required int endTime,
+          }) =>
+              SchedulesCompanion.insert(
+            id: id,
+            content: content,
+            date: date,
+            startTime: startTime,
+            endTime: endTime,
+          ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ));
+}
+
+typedef $$SchedulesTableProcessedTableManager = ProcessedTableManager<
+    _$LocalDatabase,
+    $SchedulesTable,
+    Schedule,
+    $$SchedulesTableFilterComposer,
+    $$SchedulesTableOrderingComposer,
+    $$SchedulesTableAnnotationComposer,
+    $$SchedulesTableCreateCompanionBuilder,
+    $$SchedulesTableUpdateCompanionBuilder,
+    (Schedule, BaseReferences<_$LocalDatabase, $SchedulesTable, Schedule>),
+    Schedule,
+    PrefetchHooks Function()>;
+
+class $LocalDatabaseManager {
+  final _$LocalDatabase _db;
+  $LocalDatabaseManager(this._db);
+  $$SchedulesTableTableManager get schedules =>
+      $$SchedulesTableTableManager(_db, _db.schedules);
 }

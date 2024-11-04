@@ -1,6 +1,5 @@
 import 'package:calendar_scheduler/const/colors.dart';
 import 'package:calendar_scheduler/screen/home_screen.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -66,7 +65,7 @@ class _AuthScreenState extends State<AuthScreen> {
       }
 
       await Supabase.instance.client.auth.signInWithIdToken(
-        provider: Provider.google,
+        provider: OAuthProvider.google,
         idToken: googleAuth.idToken!,
         accessToken: googleAuth.accessToken!,
       );
