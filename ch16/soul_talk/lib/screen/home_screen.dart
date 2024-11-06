@@ -9,18 +9,20 @@ import 'package:soul_talk/component/message.dart';
 import 'package:soul_talk/model/message_model.dart';
 
 final sampleData = [
-  MessageModel()
-    ..id = 1
-    ..isMine = true
-    ..message = '오늘 저녁으로 먹을만한 메뉴 추천해줘!'
-    ..point = 1
-    ..date = DateTime(2024, 11, 23),
-  MessageModel()
-    ..id = 2
-    ..isMine = false
-    ..message = '칼칼한 김치찜은 어때요!?'
-    ..point = null
-    ..date = DateTime(2024, 11, 23),
+  MessageModel(
+    id: 1,
+    isMine: true,
+    message: '오늘 저녁으로 먹을 만한 메뉴 추천해줘!',
+    point: 1,
+    date: DateTime(2024, 11, 23),
+  ),
+  MessageModel(
+    id: 2,
+    isMine: false,
+    message: '칼칼한 김치찜은 어때요!?',
+    point: null,
+    date: DateTime(2024, 11, 23),
+  ),
 ];
 
 class HomeScreen extends StatefulWidget {
@@ -100,11 +102,12 @@ class _HomeScreenState extends State<HomeScreen> {
 
       currentUserMessageId = await isar.writeTxn(() async {
         return await isar.messageModels.put(
-          MessageModel()
-            ..isMine = true
-            ..message = currentPrompt
-            ..point = myMessagesCount + 1
-            ..date = DateTime.now(),
+          MessageModel(
+            isMine: true,
+            message: currentPrompt,
+            point: myMessagesCount + 1,
+            date: DateTime.now(),
+          ),
         );
       });
 
@@ -136,10 +139,11 @@ class _HomeScreenState extends State<HomeScreen> {
                 message += event.text!;
               }
 
-              final MessageModel model = MessageModel()
-                ..isMine = false
-                ..message = message
-                ..date = DateTime.now();
+              final MessageModel model = MessageModel(
+                isMine: false,
+                message: message,
+                date: DateTime.now(),
+              );
 
               if (currentModelMessageId != null) {
                 model.id = currentModelMessageId!;

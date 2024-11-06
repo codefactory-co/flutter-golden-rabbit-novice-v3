@@ -58,12 +58,7 @@ int _messageModelEstimateSize(
   Map<Type, List<int>> allOffsets,
 ) {
   var bytesCount = offsets.last;
-  {
-    final value = object.message;
-    if (value != null) {
-      bytesCount += 3 + value.length * 3;
-    }
-  }
+  bytesCount += 3 + object.message.length * 3;
   return bytesCount;
 }
 
@@ -85,12 +80,13 @@ MessageModel _messageModelDeserialize(
   List<int> offsets,
   Map<Type, List<int>> allOffsets,
 ) {
-  final object = MessageModel();
-  object.date = reader.readDateTimeOrNull(offsets[0]);
-  object.id = id;
-  object.isMine = reader.readBoolOrNull(offsets[1]);
-  object.message = reader.readStringOrNull(offsets[2]);
-  object.point = reader.readLongOrNull(offsets[3]);
+  final object = MessageModel(
+    date: reader.readDateTime(offsets[0]),
+    id: id,
+    isMine: reader.readBool(offsets[1]),
+    message: reader.readString(offsets[2]),
+    point: reader.readLongOrNull(offsets[3]),
+  );
   return object;
 }
 
@@ -102,11 +98,11 @@ P _messageModelDeserializeProp<P>(
 ) {
   switch (propertyId) {
     case 0:
-      return (reader.readDateTimeOrNull(offset)) as P;
+      return (reader.readDateTime(offset)) as P;
     case 1:
-      return (reader.readBoolOrNull(offset)) as P;
+      return (reader.readBool(offset)) as P;
     case 2:
-      return (reader.readStringOrNull(offset)) as P;
+      return (reader.readString(offset)) as P;
     case 3:
       return (reader.readLongOrNull(offset)) as P;
     default:
@@ -208,25 +204,8 @@ extension MessageModelQueryWhere
 
 extension MessageModelQueryFilter
     on QueryBuilder<MessageModel, MessageModel, QFilterCondition> {
-  QueryBuilder<MessageModel, MessageModel, QAfterFilterCondition> dateIsNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNull(
-        property: r'date',
-      ));
-    });
-  }
-
-  QueryBuilder<MessageModel, MessageModel, QAfterFilterCondition>
-      dateIsNotNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNotNull(
-        property: r'date',
-      ));
-    });
-  }
-
   QueryBuilder<MessageModel, MessageModel, QAfterFilterCondition> dateEqualTo(
-      DateTime? value) {
+      DateTime value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'date',
@@ -237,7 +216,7 @@ extension MessageModelQueryFilter
 
   QueryBuilder<MessageModel, MessageModel, QAfterFilterCondition>
       dateGreaterThan(
-    DateTime? value, {
+    DateTime value, {
     bool include = false,
   }) {
     return QueryBuilder.apply(this, (query) {
@@ -250,7 +229,7 @@ extension MessageModelQueryFilter
   }
 
   QueryBuilder<MessageModel, MessageModel, QAfterFilterCondition> dateLessThan(
-    DateTime? value, {
+    DateTime value, {
     bool include = false,
   }) {
     return QueryBuilder.apply(this, (query) {
@@ -263,8 +242,8 @@ extension MessageModelQueryFilter
   }
 
   QueryBuilder<MessageModel, MessageModel, QAfterFilterCondition> dateBetween(
-    DateTime? lower,
-    DateTime? upper, {
+    DateTime lower,
+    DateTime upper, {
     bool includeLower = true,
     bool includeUpper = true,
   }) {
@@ -332,26 +311,8 @@ extension MessageModelQueryFilter
     });
   }
 
-  QueryBuilder<MessageModel, MessageModel, QAfterFilterCondition>
-      isMineIsNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNull(
-        property: r'isMine',
-      ));
-    });
-  }
-
-  QueryBuilder<MessageModel, MessageModel, QAfterFilterCondition>
-      isMineIsNotNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNotNull(
-        property: r'isMine',
-      ));
-    });
-  }
-
   QueryBuilder<MessageModel, MessageModel, QAfterFilterCondition> isMineEqualTo(
-      bool? value) {
+      bool value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'isMine',
@@ -361,26 +322,8 @@ extension MessageModelQueryFilter
   }
 
   QueryBuilder<MessageModel, MessageModel, QAfterFilterCondition>
-      messageIsNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNull(
-        property: r'message',
-      ));
-    });
-  }
-
-  QueryBuilder<MessageModel, MessageModel, QAfterFilterCondition>
-      messageIsNotNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNotNull(
-        property: r'message',
-      ));
-    });
-  }
-
-  QueryBuilder<MessageModel, MessageModel, QAfterFilterCondition>
       messageEqualTo(
-    String? value, {
+    String value, {
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
@@ -394,7 +337,7 @@ extension MessageModelQueryFilter
 
   QueryBuilder<MessageModel, MessageModel, QAfterFilterCondition>
       messageGreaterThan(
-    String? value, {
+    String value, {
     bool include = false,
     bool caseSensitive = true,
   }) {
@@ -410,7 +353,7 @@ extension MessageModelQueryFilter
 
   QueryBuilder<MessageModel, MessageModel, QAfterFilterCondition>
       messageLessThan(
-    String? value, {
+    String value, {
     bool include = false,
     bool caseSensitive = true,
   }) {
@@ -426,8 +369,8 @@ extension MessageModelQueryFilter
 
   QueryBuilder<MessageModel, MessageModel, QAfterFilterCondition>
       messageBetween(
-    String? lower,
-    String? upper, {
+    String lower,
+    String upper, {
     bool includeLower = true,
     bool includeUpper = true,
     bool caseSensitive = true,
@@ -743,19 +686,19 @@ extension MessageModelQueryProperty
     });
   }
 
-  QueryBuilder<MessageModel, DateTime?, QQueryOperations> dateProperty() {
+  QueryBuilder<MessageModel, DateTime, QQueryOperations> dateProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'date');
     });
   }
 
-  QueryBuilder<MessageModel, bool?, QQueryOperations> isMineProperty() {
+  QueryBuilder<MessageModel, bool, QQueryOperations> isMineProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'isMine');
     });
   }
 
-  QueryBuilder<MessageModel, String?, QQueryOperations> messageProperty() {
+  QueryBuilder<MessageModel, String, QQueryOperations> messageProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'message');
     });
