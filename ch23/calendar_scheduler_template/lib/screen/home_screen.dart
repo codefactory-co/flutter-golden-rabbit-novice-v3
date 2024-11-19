@@ -29,7 +29,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     final future = Supabase.instance.client.from('schedule').
-    select<List<Map<String, dynamic>>>().eq('date',
+    select().eq('date',
         '${selectedDate.year}${selectedDate.month.toString().padLeft(2,
             '0')}${selectedDate.day.toString().padLeft(2, '0')}');
 

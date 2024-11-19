@@ -11,7 +11,7 @@ import 'package:flutter/rendering.dart';
 import 'dart:ui' as ui;
 import 'package:flutter/services.dart';
 import 'dart:typed_data';
-import 'package:image_gallery_saver/image_gallery_saver.dart';
+import 'package:image_gallery_saver_plus/image_gallery_saver_plus.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -135,7 +135,7 @@ class _HomeScreenState extends State<HomeScreen> {
     ByteData? byteData = await image.toByteData(format: ui.ImageByteFormat.png); // ➋ byte data 형태로 형태 변경
     Uint8List pngBytes = byteData!.buffer.asUint8List(); // ➌ Unit8List 형태로 형태 변경
 
-    await ImageGallerySaver.saveImage(pngBytes, quality: 100);
+    await ImageGallerySaverPlus.saveImage(pngBytes, quality: 100);
 
     ScaffoldMessenger.of(context).showSnackBar(  // ➋ 저장 후 Snackbar 보여주기
       SnackBar(

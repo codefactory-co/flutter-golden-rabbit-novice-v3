@@ -1,6 +1,5 @@
 import 'package:calendar_scheduler/const/colors.dart';
 import 'package:calendar_scheduler/screen/home_screen.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
@@ -58,22 +57,18 @@ class _AuthScreenState extends State<AuthScreen> {
     );
 
     try {
-      print('1');
       GoogleSignInAccount? account = await googleSignIn.signIn();
 
-      print('2');
       final GoogleSignInAuthentication? googleAuth = await account?.authentication;
       if (googleAuth == null || googleAuth.idToken == null || googleAuth.accessToken == null) {
         throw Exception('로그인 실패');
       }
-      print('3');
       await Supabase.instance.client.auth.signInWithIdToken(
-        provider: Provider.google,
+        provider: OAuthProvider.google,
         idToken: googleAuth.idToken!,
         accessToken: googleAuth.accessToken!,
       );
 
-      print('4');
       Navigator.of(context).push(
         MaterialPageRoute(
           builder: (_) => HomeScreen(),

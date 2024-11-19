@@ -84,18 +84,18 @@ class _DDay extends StatelessWidget {
         Text(
           // 최상단 U&I 글자
           'U&I',
-          style: textTheme.headline1,
+          style: textTheme.displayLarge,
         ),
         const SizedBox(height: 16.0),
         Text(
           // 두번째 글자
           '우리 처음 만난 날',
-          style: textTheme.bodyText1,
+          style: textTheme.bodyLarge,
         ),
         Text(
           // 임시로 지정한 만난 날짜
           '${firstDay.year}.${firstDay.month}.${firstDay.day}',
-          style: textTheme.bodyText2,
+          style: textTheme.bodyMedium,
         ),
         const SizedBox(height: 16.0),
         IconButton(
@@ -111,7 +111,7 @@ class _DDay extends StatelessWidget {
         Text(
           // 만난 후 DDay
           'D+${DateTime(now.year, now.month, now.day).difference(firstDay).inDays + 1}',
-          style: textTheme.headline2,
+          style: textTheme.displayMedium,
         ),
       ],
     );
